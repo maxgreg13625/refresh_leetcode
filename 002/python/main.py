@@ -35,10 +35,14 @@ class Solution(object):
         return result_list
 
 def main():
-    a, b = ListNode(), ListNode()
-    a.val, b.val = 0, 0
-    test = Solution()
-    test.addTwoNumbers(a, b)
+    a, b, c = ListNode(), ListNode(), ListNode()
+    a.val, b.val, c.val = 2, 4, 3
+    a.next, b.next = b, c
+    d, e, f = ListNode(), ListNode(), ListNode()
+    d.val, e.val, f.val = 5, 6, 4
+    d.next, e.next = e, f
+ 
+    result = Solution().addTwoNumbers(a, d)
 
 if __name__ == '__main__':
     main()
