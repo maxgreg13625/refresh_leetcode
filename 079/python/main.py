@@ -2,27 +2,27 @@ from typing import List
 
 class Solution:
     def check_element(self, i: int, j: int, w_idx: int) -> bool:
+        # over boundary
         if i < 0 or j < 0 or i >= self.height or j >= self.width:
             return False
-
+        # if char not match, then back to prev
         if self.board[i][j] != self.word[w_idx]:
             return False
+        # if char match, then continue comparsion
+        w_idx += 1
+        if w_idx == len(self.word):
+            return True
+        # replace original char to avoid back to current path
+        temp, self.board[i][j] = self.board[i][j], ''
+        # check board top, down, left, and right
+        if self.check_element(i-1, j, w_idx) or\
+                self.check_element(i+1, j, w_idx) or\
+                self.check_element(i, j-1, w_idx) or\
+                self.check_element(i, j+1, w_idx):
+            return True
         else:
-            w_idx += 1
-            if w_idx == len(self.word):
-                return True
-            else:
-                # replace original char to avoid back to current path
-                temp, self.board[i][j] = self.board[i][j], ''
-                # check top, down, left, and right
-                if self.check_element(i-1, j, w_idx) or\
-                        self.check_element(i+1, j, w_idx) or\
-                        self.check_element(i, j-1, w_idx) or\
-                        self.check_element(i, j+1, w_idx):
-                    return True
-                else:
-                    self.board[i][j] = temp
-                    return False
+            self.board[i][j] = temp
+            return False
 
     def exist(self, board: List[List[str]], word: str) -> bool:
         self.board, self.word = board, word
