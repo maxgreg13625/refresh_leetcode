@@ -16,9 +16,23 @@ class Solution:
             return self.binary_search(nums, target, start, medium)
 
     def searchInsert(self, nums: List[int], target: int) -> int:
-        # solution 1: recursive
-        length = len(nums)
-        return self.binary_search(nums, target, 0, length)
+        ## solution 1: recursive
+        #length = len(nums)
+        #return self.binary_search(nums, target, 0, length)
+
+        # solution 2: loop
+        start, end = 0, len(nums)
+        while start < end:
+            medium = (start + end) // 2
+
+            if medium == start:
+                return medium + 1 if nums[medium] < target else medium
+
+            if nums[medium] == target:
+                return medium
+            else:
+                start, end = (medium, end) if nums[medium] < target else (start, medium) 
+
 
 def main():
     test = Solution()
